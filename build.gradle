@@ -1,0 +1,142 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.6.RELEASE'
+    }
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.10'
+}
+
+/*plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.8'
+    id 'java'
+}*/
+
+configurations {
+    //编译期排除commons模块
+    //compile.exclude module: 'commons'
+    //在整个构建过程中排除pkaq.tiger：share
+    compile.exclude module: "spring-boot-starter-tomcat"
+    all*.exclude group: 'org.apache.tomcat'
+    libs
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+version = '1.0'
+sourceCompatibility = 1.8
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        mavenCentral()
+    }
+}
+
+//ext['jetty.version'] = '9.2.17.v20160517'
+ext['thymeleaf.version'] = '3.0.7.RELEASE'
+ext['thymeleaf-spring4.version'] = '3.0.7.RELEASE'
+ext['thymeleaf-layout-dialect.version'] = '2.2.2'
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-amqp')
+    compile('org.springframework.boot:spring-boot-starter-aop')
+    compile('org.springframework.boot:spring-boot-starter-cache')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.springframework.boot:spring-boot-starter-mail')
+    compile('com.baomidou:mybatisplus-spring-boot-starter:1.0.4')
+    compile('com.baomidou:mybatis-plus:2.1.0')
+    compile('org.springframework.retry:spring-retry')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.session:spring-session')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-jetty')
+    compile('org.springframework.boot:spring-boot-starter-websocket')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-actuator-docs")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-remote-shell")
+    compile("com.zaxxer:HikariCP")
+    compile("com.google.guava:guava:21.0")
+    compile("io.reactivex.rxjava2:rxjava:2.1.2")
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.13.Final'
+
+    compile('com.fasterxml.jackson.jaxrs:jackson-jaxrs-xml-provider:2.8.8')
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE'
+    //webjars
+    compile("org.webjars:webjars-locator:0.32-1")
+    compile 'org.webjars:bootstrap:3.3.7'
+    compile 'org.webjars:jquery:3.2.1'
+
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    runtime('com.h2database:h2') {
+        // 冲突时优先使用该版本
+        //force = true
+
+        // 依据构建名称排除
+        //exclude module: 'cglib'
+        // 依据组织名称排除
+        //exclude group: 'org.jmock'
+        // 依据组织名称+构件名称排除
+        //exclude group: 'org.unwanted', module: 'iAmBuggy'
+
+        // 为本依赖关闭依赖传递特性
+        //transitive = false
+    }
+    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+    compileOnly('org.projectlombok:lombok:1.16.18')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+}
+
+jar {
+    from("$projectDir") {
+        include 'libs/**'
+    }
+}
+
+
+/*
+configurations {
+    includeInJar
+}
+
+dependencies {
+
+    compile fileTree(include: ['*.jar'], dir: '../Libraries')
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
+    includeInJar group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+
+    configurations.compile.extendsFrom(configurations.includeInJar)
+}
+
+jar {
+    from configurations.includeInJar.collect { zipTree it }
+}
+ */
+
+/*jar {
+    from {
+        configurations.libs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}*/

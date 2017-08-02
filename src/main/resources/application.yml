@@ -1,0 +1,108 @@
+jetty:
+  httpPort: 80
+  httpsPort: 443
+  keyStore: classpath:keystore
+  passWord: hydt2017
+
+
+debug: true
+
+security:
+  user:
+    name: hy9902
+    password: vgundam0097
+
+management:
+  security:
+    roles: SUPERUSER
+
+#spring
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:oci:@DC_EDI
+    username: edi
+    password: edi
+
+  session:
+    store-type: none
+
+  #output log color
+  output:
+    ansi:
+      enabled: always
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+    encoding:
+      charset: UTF-8
+      enabled: true
+  thymeleaf:
+    cache: false
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+    dispatch-options-request: false
+    dispatch-trace-request: false
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  messages:
+    basename: i18n/messages, i18n/my
+    encoding: UTF-8
+
+#rabbitmq
+  rabbitmq:
+    host: 192.168.201.62
+    port: 5672
+    username: ds
+    password: ds
+    virtual-host: dsdemoHost
+    listener:
+      simple:
+        acknowledge-mode: auto
+        max-concurrency: 20
+    cache:
+      channel:
+        size: 20
+
+  redis:
+    host: 192.168.201.158
+    port: 6379
+    password: ds2017@szedi.cn
+
+logging:
+  level:
+    com.hydt: debug
+
+dc:
+  enable: true
+  eir:
+    apl: 美国总统
+    cma: 达飞轮船
+    a b: c
+  pc:
+    - mac
+    - thinkpad
+    - sony
+    - xiaomi
+server:
+  port: 443
+  ssl:
+    enabled: true
+    key-store: classpath:keystore
+    key-password: hydt2017

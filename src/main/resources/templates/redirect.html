@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="refresh" content="3;url=http://www.cmclink.com">-->
+    <title>Hello</title>
+</head>
+<body>
+    <span id="s"></span>
+</body>
+<script type="text/javascript">
+    var time = 8; //时间,秒
+    function Redirect() {
+        window.location = "http://www.cmclink.com";
+    }
+    var i = 0;
+    function dis() {
+        document.all.s.innerHTML = "还剩" + (time - i) + "秒";
+        i++;
+    }
+    timer = setInterval('dis()', 1000); //显示时间
+    timer = setTimeout('Redirect()', time * 1000); //跳转
+</script>
+</html>
