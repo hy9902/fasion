@@ -1,6 +1,5 @@
 package com.hydt.app.config.dataSource;
 
-import org.apache.ibatis.binding.MapperMethod;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,6 +20,7 @@ import java.lang.reflect.Method;
 public class DataSourceAspect {
     private static Logger logger = LoggerFactory.getLogger(DataSourceAspect.class);
 
+    //定义方法表达式切面
     @Pointcut("execution(* com.hydt.app.service.*.*(..))")
     public void dataSourcePointcut() {
     }
@@ -43,14 +43,14 @@ public class DataSourceAspect {
         try {
             Class<?>[] types = method.getParameterTypes();
             // 默认使用类注解
-            if (clazz.isAnnotationPresent(DataSource.class)) {
-                DataSource source = clazz.getAnnotation(DataSource.class);
+            if (clazz.isAnnotationPresent(TargetDataSource.class)) {
+                TargetDataSource source = clazz.getAnnotation(TargetDataSource.class);
                 DynamicDataSourceHolder.setDataSource(source.value());
             }
             // 方法注解可以覆盖类注解
             Method m = clazz.getMethod(method.getName(), types);
-            if (m != null && m.isAnnotationPresent(DataSource.class)) {
-                DataSource source = m.getAnnotation(DataSource.class);
+            if (m != null && m.isAnnotationPresent(TargetDataSource.class)) {
+                TargetDataSource source = m.getAnnotation(TargetDataSource.class);
                 DynamicDataSourceHolder.setDataSource(source.value());
             }
         } catch (Exception e) {
@@ -64,8 +64,9 @@ public class DataSourceAspect {
     }
 
 
+    //spel 注解表达式切面
     @Before("@annotation(ds)")
-    public void doAnnotationBefore(JoinPoint joinPoint, DataSource ds){
+    public void doAnnotationBefore(JoinPoint joinPoint, TargetDataSource ds){
 
     }
 }

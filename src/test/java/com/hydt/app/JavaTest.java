@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -78,5 +80,11 @@ public class JavaTest {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         // NullPointerException does not have to be thrown
         ((sun.awt.Win32GraphicsEnvironment) ge).displayChanged();
+    }
+
+    @Test
+    public void testMove(){
+        int i = 1;
+        System.out.println(i<<2);
     }
 }
