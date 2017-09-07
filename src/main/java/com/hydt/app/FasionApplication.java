@@ -1,10 +1,9 @@
 package com.hydt.app;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+
 import com.hydt.app.config.TcScopeConfig;
 import com.hydt.app.service.SampleService;
+import com.hydt.app.storage.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory;
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -49,6 +48,14 @@ public class FasionApplication implements CommandLineRunner{
 	}
 
 
+	@Bean
+	CommandLineRunner init(StorageService storageService) {
+		return (args) -> {
+			storageService.deleteAll();
+			storageService.init();
+		};
+	}
+
 
 	/**
 	 * Callback used to run the bean.
@@ -59,7 +66,7 @@ public class FasionApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		//testSampleService();
-		//testTcScopeConfig();
+		testTcScopeConfig();
 	}
 
 	private void testTcScopeConfig(){

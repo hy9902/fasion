@@ -20,7 +20,7 @@ import java.util.Date;
 public class IndexController {
     private static Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @RequestMapping("")
+    @RequestMapping("/")
     public String index(){
         return "index";
     }

@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User {
     private Long id;
     private String name;

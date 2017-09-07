@@ -42,6 +42,7 @@ spring:
     multipart:
       enabled: true
       max-file-size: 100MB
+      max-request-size: 120MB
     encoding:
       charset: UTF-8
       enabled: true
@@ -84,6 +85,7 @@ spring:
     host: 192.168.201.158
     port: 6379
     password: ds2017@szedi.cn
+
 
 logging:
   level:
