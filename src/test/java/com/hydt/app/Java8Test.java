@@ -1,12 +1,17 @@
 package com.hydt.app;
 
+import com.hydt.app.controller.FileUploadController;
 import com.hydt.app.vo.User;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,10 +56,11 @@ public class Java8Test {
     }
 
     @Test
-    public void testMap(){
-        File f = new File("D:\\3DSNUS1.9");
-        Stream<Path> pathStream = Arrays.stream(f.listFiles()).map(e -> e.toPath());
-        pathStream.forEach(e-> System.out.println(e.toString()));
+    public void testPaths() throws IOException {
+        Path path = Paths.get("D:\\");
+        Files.list(path).forEach(System.out::println);
+
+        System.out.println(path.resolve("mbpg").toString());
     }
 
     @Test
