@@ -8,6 +8,8 @@ jetty:
 debug: true
 
 security:
+  basic:
+    enabled: true
   user:
     name: hy9902
     password: vgundam0097
@@ -15,6 +17,7 @@ security:
 management:
   security:
     roles: SUPERUSER
+    enabled: true
 
 #spring
 spring:
@@ -90,6 +93,7 @@ spring:
 logging:
   level:
     com.hydt: debug
+    org.springframework.jdbc.core: debug
 
 dc:
   enable: true

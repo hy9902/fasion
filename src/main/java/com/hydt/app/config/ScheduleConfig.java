@@ -2,6 +2,7 @@ package com.hydt.app.config;
 
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
@@ -10,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.CronTask;
 import org.springframework.scheduling.config.ScheduledTask;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.config.Task;
@@ -33,6 +35,7 @@ public class ScheduleConfig implements SchedulingConfigurer,AsyncConfigurer {
      */
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+
     }
 
     /**
@@ -41,7 +44,7 @@ public class ScheduleConfig implements SchedulingConfigurer,AsyncConfigurer {
      */
     @Override
     public Executor getAsyncExecutor() {
-        return null;
+        return scheduledTask();
     }
 
     /**
@@ -51,14 +54,14 @@ public class ScheduleConfig implements SchedulingConfigurer,AsyncConfigurer {
      */
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return null;
+        return new SimpleAsyncUncaughtExceptionHandler();
     }
 
-    @Bean
-    public TaskScheduler scheduledTask(){
+    private ThreadPoolTaskScheduler scheduledTask(){
         ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
         taskScheduler.setPoolSize(20);
         taskScheduler.setAwaitTerminationSeconds(1);
+        taskScheduler.initialize();
         return taskScheduler;
     }
 }

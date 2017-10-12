@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,8 +26,9 @@ import java.util.Map;
 @SpringBootApplication
 @EnableTransactionManagement
 @ImportResource()
+@ServletComponentScan
 //@EnableAspectJAutoProxy(proxyTargetClass = true)
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+//@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 //@PropertySource(value={"file:D:/zTest/config/config1.properties"})
 public class FasionApplication implements CommandLineRunner{
 

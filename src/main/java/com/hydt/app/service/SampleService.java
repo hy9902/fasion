@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class SampleService {
 
-    @Secured("ROLE_USER")
+    //@Secured("ROLE_USER")
     public String secure() {
         return "Hello Security";
     }
 
-    @PreAuthorize("true")
+    //@PreAuthorize("true")
     public String authorized() {
         return "Hello World";
     }
 
-    @PreAuthorize("false")
+    //@PreAuthorize("false")
     public String denied() {
         return "Goodbye World";
     }

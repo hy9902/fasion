@@ -1,14 +1,16 @@
 package com.hydt.app;
 
+import org.eclipse.jetty.webapp.WebAppContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.interceptor.TransactionalProxy;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,14 +33,4 @@ public class FasionApplicationTests {
 		System.out.println(path);
 	}
 
-	@Test
-	public void testSendEmail(){
-		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-	}
-
-
-	@Test
-	public void testdb(){
-
-	}
 }

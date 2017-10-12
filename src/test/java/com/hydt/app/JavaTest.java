@@ -1,23 +1,43 @@
 package com.hydt.app;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.geccocrawler.gecco.GeccoEngine;
+import com.google.common.html.HtmlEscapers;
 import com.hydt.app.service.CService;
 import com.hydt.app.service.MyService;
+import com.hydt.app.utils.ExcelUtils;
+import com.hydt.app.vo.User;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.AsyncSubject;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.bouncycastle.crypto.Digest;
+import org.bouncycastle.crypto.digests.MD5Digest;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.security.web.util.TextEscapeUtils;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import sun.security.rsa.RSAPrivateCrtKeyImpl;
 
 import java.awt.*;
-import java.beans.ConstructorProperties;
+import java.io.IOException;
+import java.security.*;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
-import java.time.Clock;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by bean_huang on 2017/7/11.
@@ -86,5 +106,213 @@ public class JavaTest {
     public void testMove(){
         int i = 1;
         System.out.println(i<<2);
+    }
+
+    @Test
+    public void testEscapeHtml(){
+        String s = "<script>alert('黄义')</script>";
+        System.out.println(TextEscapeUtils.escapeEntities(s));
+    }
+
+    @Test
+    public void testEscapeHtml2(){
+        String s = "<script>alert('黄义')</script>";
+        System.out.println(StringEscapeUtils.escapeHtml4(s));
+    }
+
+    @Test
+    public void testEscapeHtml3(){
+        String s = "<script type=\"text/javascript\">alert('黄义')</script>";
+        System.out.println(HtmlEscapers.htmlEscaper().escape(s));
+    }
+
+    @Test
+    public void testJson() throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(SerializationFeature.WRITE_NULL_MAP_VALUES);
+        objectMapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
+        objectMapper.enable(SerializationFeature.CLOSE_CLOSEABLE);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        Map<String,Object> map = new HashMap<>();
+        map.put("a1", null);
+        map.put("a2", "123");
+        map.put("a3", "");
+        System.out.println(objectMapper.writeValueAsString(map));
+
+        User user = new User();
+        user.setAge(0);
+        user.setId(null);
+        user.setName("");
+        System.out.println(objectMapper.writeValueAsString(user));
+    }
+
+    @Test
+    public void testAsyncSubject(){
+        AsyncSubject subject = AsyncSubject.create();
+        subject.subscribe(new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                System.out.println(o);
+            }
+        });
+        subject.onNext("a");
+        subject.onComplete();
+        subject.onNext("c");
+        subject.onError(new RuntimeException("test"));
+    }
+
+    @Test
+    public void testAsyn1(){
+        Flowable.empty().startWithArray(1,2,3).subscribe(i -> {
+            System.out.println(Thread.currentThread().getName());
+            System.out.println(i);
+        });
+    }
+
+    @Test
+    public void testAsyn2() throws InterruptedException {
+        Flowable.range(1, 1000).parallel(1).runOn(Schedulers.computation()).sequential().subscribe(i -> {
+            System.out.println(Thread.currentThread().getName());
+            System.out.println(i);
+        });
+
+        Thread.sleep(50000);
+    }
+
+    /**
+     *  正则表达式检查8位长度的字符串包括数字+字母，不区分大小写
+     */
+    @Test
+    public void testCode(){
+        Pattern p = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8}$");
+        Matcher m = p.matcher("12345678");
+        System.out.println(m.matches());
+    }
+
+    @Test
+    public void testExcelExport(){
+        String tmp = "BUSINESS";
+        String title = "舱单信息";
+        String[] rowsName = new String[]{"序号","货物运输批次号","提运单号","状态","录入人","录入时间"};
+        List<Object[]> dataList = new ArrayList<>();
+        Object[] objs = null;
+        for (int i = 0; i < 10; i++) {
+            objs = new Object[rowsName.length];
+            objs[0] = i;
+            objs[1] = UUID.randomUUID().version();
+            objs[2] = UUID.randomUUID().toString();
+            objs[3] = "海关接受报告";
+            objs[4] = "xyz";
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date = df.format(new Date());
+            objs[5] = date;
+            dataList.add(objs);
+        }
+        ExcelUtils ex = new ExcelUtils(title, rowsName, dataList);
+        ex.export();
+    }
+
+    @Test
+    public void testCrawler(){
+        GeccoEngine.create()
+                .classpath("com.hydt.app.crawler")
+                .start("https://github.com/xtuhcy/gecco")
+                .thread(1)
+                .interval(2000)
+                .loop(true)
+                .mobile(false)
+                .start();
+    }
+
+    @Test
+    public void testMD5() throws NoSuchAlgorithmException {
+        String source = "";
+        Digest digest = new MD5Digest();
+        digest.update(source.getBytes(), 0, source.length());
+        byte[] des = new byte[digest.getDigestSize()];
+        digest.doFinal(des, 0);
+        for (int i = 0; i < des.length; i++) {
+            byte b = des[i];
+            System.out.println(Integer.valueOf(b)+ "--------------------------" + Integer.toBinaryString(b & 0xfff));
+            System.out.println(b>>>4 & 0xf);
+            System.out.println(b & 0xf);
+            System.out.println(b & 0xfff);
+            System.out.println("--------------------------");
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testHex2() throws NoSuchAlgorithmException {
+        System.out.println(Integer.toBinaryString(-1&0xf) );
+        System.out.println(Integer.toBinaryString(15&0xf) );
+
+    }
+
+    @Test
+    public void testKeyStone() throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, UnrecoverableKeyException {
+        Resource resource = new ClassPathResource("keystore");
+        String pw = "hydt2017";
+        if(resource.getFile().exists()){
+            System.out.println("keystore is good");
+            KeyStore keyStore =  KeyStore.getInstance(KeyStore.getDefaultType());
+            keyStore.load(resource.getInputStream(),pw.toCharArray());
+            Key key = keyStore.getKey("jetty",pw.toCharArray());
+            System.out.println(key.getClass().getName());
+            RSAPrivateCrtKeyImpl privateCrtKey = (RSAPrivateCrtKeyImpl)key;
+            System.out.println(privateCrtKey.getAlgorithm());
+            Certificate certificate = keyStore.getCertificate("jetty");
+            if( certificate == null){
+                System.out.println("Failed to find UTF cert.");
+            } else {
+                System.out.println("certificate." + certificate.getPublicKey());
+            }
+        } else {
+            System.out.println("file is not exists");
+        }
+    }
+
+    @Test
+    public void testKeyStoneCsr() throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, UnrecoverableKeyException {
+        Resource resource = new ClassPathResource("jetty.csr");
+        String pw = "hydt2017";
+        if(resource.getFile().exists()){
+            System.out.println("keystore is good");
+            KeyStore keyStore =  KeyStore.getInstance(KeyStore.getDefaultType());
+            keyStore.load(resource.getInputStream(),pw.toCharArray());
+            Key key = keyStore.getKey("jetty",pw.toCharArray());
+            System.out.println(key.getClass().getName());
+            RSAPrivateCrtKeyImpl privateCrtKey = (RSAPrivateCrtKeyImpl)key;
+            System.out.println(privateCrtKey.getAlgorithm());
+            Certificate certificate = keyStore.getCertificate("jetty");
+            if( certificate == null){
+                System.out.println("Failed to find UTF cert.");
+            } else {
+                System.out.println("certificate." + certificate.getPublicKey());
+            }
+        } else {
+            System.out.println("file is not exists");
+        }
+    }
+
+    @Test
+    public void testKeyStoneWithCA() throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, UnrecoverableKeyException {
+        Resource resource = new ClassPathResource("cmclinkcert.jks");
+        String pw = "GjSc3q75ChZy";
+        if(resource.getFile().exists()){
+            System.out.println("keystore is good");
+            KeyStore keyStore =  KeyStore.getInstance("jks");
+            keyStore.load(resource.getInputStream(),pw.toCharArray());
+            Enumeration<String> enumeration =  keyStore.aliases();
+            while (enumeration.hasMoreElements()){
+                System.out.println(enumeration.nextElement());
+            }
+            Key key =  keyStore.getKey("*.cmclink.com (geotrust ssl ca - g3)",pw.toCharArray());
+            System.out.println(key.getClass().getName());
+        } else {
+            System.out.println("file is not exists");
+        }
+
+        String test = "OBTAIN";
     }
 }
