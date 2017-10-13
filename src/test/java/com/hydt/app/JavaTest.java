@@ -142,7 +142,7 @@ public class JavaTest {
         User user = new User();
         user.setAge(0);
         user.setId(null);
-        user.setName("");
+        user.setName("DISCOUNT_AMOUNT");
         System.out.println(objectMapper.writeValueAsString(user));
     }
 
@@ -152,13 +152,33 @@ public class JavaTest {
         subject.subscribe(new Consumer() {
             @Override
             public void accept(Object o) throws Exception {
-                System.out.println(o);
+                System.out.println("ch1: " + o);
             }
         });
+
+        subject.subscribe(new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                System.out.println("ch2: " + o);
+            }
+        });
+
         subject.onNext("a");
+        subject.onNext("c1");
+        subject.onNext("c2");
+        subject.onNext("c3");
+        subject.onNext("c4");
         subject.onComplete();
-        subject.onNext("c");
-        subject.onError(new RuntimeException("test"));
+        subject.onNext("c5");
+        subject.onNext("c6");
+        subject.onNext("c7");
+        subject.onNext("c8");
+        subject.onNext("c9");
+        subject.onNext("c0");
+
+        subject.onComplete();
+        System.out.println(subject.lastElement().blockingGet());
+        //subject.onError(new RuntimeException("test"));
     }
 
     @Test
