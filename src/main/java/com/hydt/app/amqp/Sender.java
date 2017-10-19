@@ -19,7 +19,7 @@ import java.util.Date;
  */
 public class Sender {
     private static Logger logger = LoggerFactory.getLogger(Sender.class);
-    private static int id = 1;
+    private static Long id = 1L;
     @Autowired
     private RabbitTemplate rabbitTemplate;
 

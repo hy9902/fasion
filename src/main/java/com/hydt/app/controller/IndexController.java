@@ -65,7 +65,7 @@ public class IndexController {
         HttpSession httpSession = request.getSession();
         User user = new User();
         user.setId(uid);
-        user.setAge(20);
+        user.setAge(1);
         user.setName("ann");
         user.setBirthDate(new Date());
         return Result.sucess(1,"OK",user);

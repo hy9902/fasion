@@ -1,7 +1,7 @@
 package com.hydt.app;
 
+import com.hydt.app.common.User;
 import com.hydt.app.controller.FileUploadController;
-import com.hydt.app.vo.User;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

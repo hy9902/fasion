@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.7.RELEASE'
+        springBootVersion = '1.5.8.RELEASE'
     }
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
@@ -68,8 +68,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-redis')
     compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile('org.springframework.boot:spring-boot-starter-mail')
-    compile('com.baomidou:mybatisplus-spring-boot-starter:1.0.4')
-    compile('com.baomidou:mybatis-plus:2.1.2')
+    compile('com.baomidou:mybatisplus-spring-boot-starter:1.0.5')
+    compile('com.baomidou:mybatis-plus:2.1.4')
     compile('org.springframework.retry:spring-retry')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.session:spring-session')

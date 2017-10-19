@@ -1,84 +1,106 @@
 package com.hydt.app.vo;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableLogic;
+import com.hydt.app.vo.enums.AgeEnum;
+import com.hydt.app.vo.enums.PhoneEnum;
 import org.apache.log4j.Logger;
+
+import java.util.Date;
 
 /**
  * Created by bean_huang on 2017/8/2.
  */
-public class User {
-    private static final Logger log = Logger.getLogger(User.class);
-    private Long id;
+public class User extends SuperEntity<User> {
+    /**
+     * 名称
+     */
     private String name;
-    private Integer age;
+    /**
+     * 年龄
+     */
+    private AgeEnum age;
+    /**
+     * 这里故意演示注解可无
+     */
+    @TableField("test_type")
+    @TableLogic
+    private Integer testType;
 
-    @java.beans.ConstructorProperties({"id", "name", "age"})
-    public User(Long id, String name, Integer age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
+    private Date testDate;
+
+    private Long role;
+    private PhoneEnum phone;
 
     public User() {
     }
 
-    public Long getId() {
-        return this.id;
+    public User(Long id, String name, AgeEnum age, Integer testType) {
+        this.setId(id);
+        this.name = name;
+        this.age = age;
+        this.testType = testType;
     }
+
+    public User(String name, AgeEnum age, Integer testType) {
+        this.name = name;
+        this.age = age;
+        this.testType = testType;
+    }
+
 
     public String getName() {
         return this.name;
-    }
-
-    public Integer getAge() {
-        return this.age;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setAge(Integer age) {
+    public AgeEnum getAge() {
+        return this.age;
+    }
+
+    public void setAge(AgeEnum age) {
         this.age = age;
     }
 
-    public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof User)) return false;
-        final User other = (User) o;
-        if (!other.canEqual((Object) this)) return false;
-        final Object this$id = this.getId();
-        final Object other$id = other.getId();
-        if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
-        final Object this$name = this.getName();
-        final Object other$name = other.getName();
-        if (this$name == null ? other$name != null : !this$name.equals(other$name)) return false;
-        final Object this$age = this.getAge();
-        final Object other$age = other.getAge();
-        if (this$age == null ? other$age != null : !this$age.equals(other$age)) return false;
-        return true;
+    public Integer getTestType() {
+        return this.testType;
     }
 
-    public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Object $id = this.getId();
-        result = result * PRIME + ($id == null ? 43 : $id.hashCode());
-        final Object $name = this.getName();
-        result = result * PRIME + ($name == null ? 43 : $name.hashCode());
-        final Object $age = this.getAge();
-        result = result * PRIME + ($age == null ? 43 : $age.hashCode());
-        return result;
+    public void setTestType(Integer testType) {
+        this.testType = testType;
     }
 
-    protected boolean canEqual(Object other) {
-        return other instanceof User;
+    public Long getRole() {
+        return this.role;
     }
 
+    public void setRole(Long role) {
+        this.role = role;
+    }
+
+    public PhoneEnum getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(PhoneEnum phone) {
+        this.phone = phone;
+    }
+
+    public Date getTestDate() {
+        return testDate;
+    }
+
+    public void setTestDate(Date testDate) {
+        this.testDate = testDate;
+    }
+
+    @Override
     public String toString() {
-        return "User(id=" + this.getId() + ", name=" + this.getName() + ", age=" + this.getAge() + ")";
+        return "User [id=" + this.getId() + ", name=" + name + ", age=" + age
+                + ", testType=" + testType + ", testDate="
+                + testDate + ", role=" + role + ", phone=" + phone + "]";
     }
 }

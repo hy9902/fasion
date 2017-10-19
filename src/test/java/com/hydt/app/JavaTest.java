@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.google.common.html.HtmlEscapers;
+import com.hydt.app.common.User;
 import com.hydt.app.service.CService;
 import com.hydt.app.service.MyService;
 import com.hydt.app.utils.ExcelUtils;
-import com.hydt.app.vo.User;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -23,11 +23,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.web.util.TextEscapeUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import sun.misc.BASE64Encoder;
 import sun.security.rsa.RSAPrivateCrtKeyImpl;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -280,7 +286,11 @@ public class JavaTest {
             Key key = keyStore.getKey("jetty",pw.toCharArray());
             System.out.println(key.getClass().getName());
             RSAPrivateCrtKeyImpl privateCrtKey = (RSAPrivateCrtKeyImpl)key;
-            System.out.println(privateCrtKey.getAlgorithm());
+            BASE64Encoder encoder = new BASE64Encoder();
+            System.out.println("-----BEGIN RSA PRIVATE KEY-----");
+            System.out.println(encoder.encode(privateCrtKey.getEncoded()) );
+            System.out.println("-----END RSA PRIVATE KEY-----");
+
             Certificate certificate = keyStore.getCertificate("jetty");
             if( certificate == null){
                 System.out.println("Failed to find UTF cert.");
@@ -303,7 +313,7 @@ public class JavaTest {
             Key key = keyStore.getKey("jetty",pw.toCharArray());
             System.out.println(key.getClass().getName());
             RSAPrivateCrtKeyImpl privateCrtKey = (RSAPrivateCrtKeyImpl)key;
-            System.out.println(privateCrtKey.getAlgorithm());
+            System.out.println(privateCrtKey.toString());
             Certificate certificate = keyStore.getCertificate("jetty");
             if( certificate == null){
                 System.out.println("Failed to find UTF cert.");
@@ -333,6 +343,34 @@ public class JavaTest {
             System.out.println("file is not exists");
         }
 
-        String test = "OBTAIN";
+        String test = "E10ADC3949BA59ABBE56E057F20F883E";
+        String abcd = "E10ADC3949BA59ABBE56E057F20F883E";
+    }
+
+    @Test
+    public void testStreamCopy() throws Exception{
+        InputStream is = new FileInputStream(new File("d:\\test.txt"));
+        String content = StreamUtils.copyToString(is, Charset.forName("utf-8"));
+        System.out.println(content);
+        System.out.println(is.available());
+    }
+
+    @Test
+    public void testLoop1(){
+        int i = 2017;
+        int count = 0;
+        while (i > 1){
+            count++;
+            i/=2;
+            System.out.println(count);
+        }
+    }
+
+    @Test
+    public void testFileEncode(){
+        String utf8String = "我是中国人";
+        String newString =  new String(utf8String.getBytes(Charset.forName("ISO-8859-1")));
+        System.out.println(newString);
+
     }
 }
