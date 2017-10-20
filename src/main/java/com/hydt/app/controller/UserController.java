@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.plugins.pagination.PageHelper;
+import com.hydt.app.config.dataSource.TargetDataSource;
 import com.hydt.app.service.IUserService;
 import com.hydt.app.vo.User;
 import com.hydt.app.vo.enums.AgeEnum;
@@ -30,6 +31,7 @@ public class UserController {
      * 分页 PAGE
      */
     @GetMapping("/test")
+    @TargetDataSource("dataSource")
     public Page<User> test() {
         return userService.selectPage(new Page<User>(0, 12));
     }

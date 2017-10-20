@@ -9,6 +9,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +21,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * Created by bean_huang on 2017/9/25.
  */
-@Configuration
+@Service
 @Async
-public class JobConfig {
+public class JobService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

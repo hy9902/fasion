@@ -2,6 +2,7 @@ package com.hydt.app;
 
 
 import com.hydt.app.config.TcScopeConfig;
+import com.hydt.app.config.dataSource.DynamicDataSourceRegister;
 import com.hydt.app.service.SampleService;
 import com.hydt.app.storage.StorageService;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -30,6 +32,7 @@ import java.util.Map;
 //@EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 //@PropertySource(value={"file:D:/zTest/config/config1.properties"})
+@Import(DynamicDataSourceRegister.class)
 public class FasionApplication implements CommandLineRunner{
 
 	private static Logger logger = LoggerFactory.getLogger(FasionApplication.class);

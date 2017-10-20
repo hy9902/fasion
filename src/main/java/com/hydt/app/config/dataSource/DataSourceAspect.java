@@ -8,6 +8,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
@@ -16,12 +18,13 @@ import java.lang.reflect.Method;
  * Created by bean_huang on 2017/7/11.
  */
 @Aspect
-@Service
+@Order(-1)
+@Component
 public class DataSourceAspect {
     private static Logger logger = LoggerFactory.getLogger(DataSourceAspect.class);
 
     //定义方法表达式切面
-    @Pointcut("execution(* com.hydt.app.service.*.*(..))")
+    @Pointcut("execution(* com.hydt1.app.service.*.*(..))")
     public void dataSourcePointcut() {
     }
 
@@ -67,6 +70,12 @@ public class DataSourceAspect {
     //spel 注解表达式切面
     @Before("@annotation(ds)")
     public void doAnnotationBefore(JoinPoint joinPoint, TargetDataSource ds){
+        logger.error(joinPoint.getTarget().getClass().getName() + " : " + ds.value());
+    }
 
+    //spel 注解表达式切面
+    @After("@annotation(ds)")
+    public void doAnnotationAfter(JoinPoint joinPoint, TargetDataSource ds){
+        logger.error(joinPoint.getTarget().getClass().getName() + " : " + ds.value());
     }
 }

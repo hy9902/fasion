@@ -1,22 +1,15 @@
 package com.hydt.app.controller;
 
-import com.google.common.html.HtmlEscapers;
 import com.hydt.app.common.Result;
 import com.hydt.app.common.User;
-import com.hydt.app.job.JobConfig;
-import org.apache.ibatis.session.ResultContext;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSessionFactory;
+import com.hydt.app.job.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by bean_huang on 2017/7/5.
@@ -38,7 +28,7 @@ public class IndexController {
     private static Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
-    JobConfig jobConfig;
+    JobService jobService;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -108,14 +98,14 @@ public class IndexController {
     @RequestMapping("/startJob")
     @ResponseBody
     public Object startJob(String name){
-        jobConfig.startJob(name);
+        jobService.startJob(name);
         return Result.sucess(1,"OK",null);
     }
 
     @RequestMapping("/stopJob")
     @ResponseBody
     public Object stopJob(String name){
-        jobConfig.stopJob(name);
+        jobService.stopJob(name);
         return Result.sucess(1,"OK",null);
     }
 
