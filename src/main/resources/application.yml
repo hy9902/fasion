@@ -31,6 +31,7 @@ spring:
     platform: h2
     initialize: true
     continue-on-error: true
+    driver-class-name: org.h2.Driver
   h2:
     console:
       enabled: true

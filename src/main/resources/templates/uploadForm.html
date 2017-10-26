@@ -6,7 +6,7 @@
 </head>
 <body>
 
-
+<!--/*@thymesVar id="message" type="java.lang.String"*/-->
 <div th:if="${message}">
     <h2 th:text="${message}"/>
 </div>
@@ -22,7 +22,9 @@
 
 <div>
     <ul>
+        <!--/*@thymesVar id="files" type="list"*/-->
         <li th:each="file : ${files}">
+            <!--/*@thymesVar id="file" type="java.lang.String"*/-->
             <a th:href="${file}" th:text="${file}" />
         </li>
     </ul>

@@ -15,6 +15,8 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -94,12 +96,15 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         // 读取配置文件获取更多数据源，也可以通过defaultDataSource读取数据库获取更多数据源
         RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(env, "custom.datasource.");
         String dsPrefixs = propertyResolver.getProperty("names");
-        for (String dsPrefix : dsPrefixs.split(",")) {// 多个数据源
-            Map<String, Object> dsMap = propertyResolver.getSubProperties(dsPrefix + ".");
-            DataSource ds = buildDataSource(dsMap);
-            customDataSources.put(dsPrefix, ds);
-            dataBinder(ds, env);
+        if(StringUtils.hasText(dsPrefixs)){
+            for (String dsPrefix : dsPrefixs.split(",")) {// 多个数据源
+                Map<String, Object> dsMap = propertyResolver.getSubProperties(dsPrefix + ".");
+                DataSource ds = buildDataSource(dsMap);
+                customDataSources.put(dsPrefix, ds);
+                dataBinder(ds, env);
+            }
         }
+
     }
 
     /**
