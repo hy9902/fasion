@@ -210,8 +210,11 @@ public class JavaTest {
      */
     @Test
     public void testCode(){
-        Pattern p = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8}$");
-        Matcher m = p.matcher("12345678");
+        String tmp = " abcdefgh ";
+        tmp = tmp.trim().toUpperCase();
+        //Pattern p = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8}$");
+        Pattern p = Pattern.compile("^[0-9A-Z]{8}$");
+        Matcher m = p.matcher(tmp);
         System.out.println(m.matches());
     }
 
