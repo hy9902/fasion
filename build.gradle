@@ -69,9 +69,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile('org.springframework.boot:spring-boot-starter-mail')
     compile('com.baomidou:mybatisplus-spring-boot-starter:1.0.5')
-    compile('com.baomidou:mybatis-plus:2.1.4')
+    compile('com.baomidou:mybatis-plus:2.1.6')
     compile('org.springframework.retry:spring-retry')
     compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.security.oauth:spring-security-oauth2')
     compile('org.springframework.session:spring-session')
     compile('org.springframework.boot:spring-boot-starter-data-redis')
     compile('org.springframework.boot:spring-boot-starter-web')
@@ -84,10 +85,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-remote-shell")
     compile("com.zaxxer:HikariCP")
-    compile("com.google.guava:guava:23.3-jre")
-    compile("io.reactivex.rxjava2:rxjava:2.1.5")
+    compile("com.google.guava:guava:23.4-jre")
+    compile("io.reactivex.rxjava2:rxjava:2.1.6")
     // https://mvnrepository.com/artifact/io.netty/netty-all
-    compile group: 'io.netty', name: 'netty-all', version: '4.1.16.Final'
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.17.Final'
 
 
     compile('com.fasterxml.jackson.jaxrs:jackson-jaxrs-xml-provider:2.8.8')

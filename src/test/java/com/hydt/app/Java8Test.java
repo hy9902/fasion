@@ -1,13 +1,10 @@
 package com.hydt.app;
 
 import com.hydt.app.common.User;
-import com.hydt.app.controller.FileUploadController;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -121,7 +118,8 @@ public class Java8Test {
             user.setName(i+"");
             user.setAge(i);
             list.add(user);
-        }//随机生成5个person实例
+        }
+        //随机生成5个person实例
         List<Integer> ages = new ArrayList<>();
         list.stream().forEach(person -> ages.add(person.getAge()));
         System.out.println(ages);//第一处打印
@@ -132,6 +130,15 @@ public class Java8Test {
         }).count();
         list.stream().forEach(person -> ages.add(person.getAge()));
         System.out.println(ages);//第二处打印
-//问两处打印的值是否相同，为什么？
+        //问两处打印的值是否相同，为什么？
+    }
+
+    @Test
+    public void testSizeOf(){
+        System.out.println("Integer：" + Integer.BYTES);
+        System.out.println("Short：" + Short.BYTES);
+        System.out.println("Long：" + Long.BYTES);
+        System.out.println("Double：" + Double.BYTES);
+        System.out.println("Byte：" + Byte.BYTES);
     }
 }

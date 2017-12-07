@@ -12,13 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -34,6 +33,7 @@ import java.util.Map;
 //@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 //@PropertySource(value={"file:D:/zTest/config/config1.properties"})
 @Import(DynamicDataSourceRegister.class)
+@EnableOAuth2Sso
 public class FasionApplication implements CommandLineRunner{
 
 	private static Logger logger = LoggerFactory.getLogger(FasionApplication.class);

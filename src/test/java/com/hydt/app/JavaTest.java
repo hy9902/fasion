@@ -375,5 +375,16 @@ public class JavaTest {
         String newString =  new String(utf8String.getBytes(Charset.forName("ISO-8859-1")));
         System.out.println(newString);
 
+        String s = "taobao";
+        String a1 ="tao" + "bao";
+        String a2 = new String("tao") + new String("bao");
+        String b1 = "tao";
+        String b2 = "bao";
+        System.out.println(s == a1);
+        System.out.println(s == a2);
+        System.out.println((b1+b2) == s);
+        System.out.println(b1+b2);
     }
+
+
 }

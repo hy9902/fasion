@@ -3,9 +3,7 @@ package com.hydt.app;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.util.StringUtils;
 
-import java.util.Scanner;
 import java.util.concurrent.*;
 
 /**
@@ -40,8 +38,8 @@ public class ThreadTest {
                 public void run(){
                     try {
                         //阻塞子线程，直到CountDownLatch计数器减为0
+                        //cd.await();
                         cd.await();
-                        //cb.await();
                         System.out.println("线程名称"+Thread.currentThread().getName());
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
@@ -50,11 +48,10 @@ public class ThreadTest {
                 }
             });
             cd.countDown();
-            System.out.println("线程名称"+Thread.currentThread().getName() + "   hello countdownlatch……");
         }
 
+        System.out.println("线程名称"+Thread.currentThread().getName() + "   hello countdownlatch……");
         System.in.read();
-
     }
 
     @Test
@@ -107,5 +104,9 @@ public class ThreadTest {
         }
 
         System.in.read();
+    }
+
+    @Test
+    public void test123(){
     }
 }
