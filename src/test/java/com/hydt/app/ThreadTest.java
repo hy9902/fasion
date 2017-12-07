@@ -105,8 +105,4 @@ public class ThreadTest {
 
         System.in.read();
     }
-
-    @Test
-    public void test123(){
-    }
 }
