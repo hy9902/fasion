@@ -42,6 +42,8 @@ import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,13 +101,6 @@ public class JavaTest {
     public void testP(){
         AnnotationConfigWebApplicationContext ac = new AnnotationConfigWebApplicationContext();
         ac.getBean("");
-    }
-
-    @Test
-    public void testAWT(){
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        // NullPointerException does not have to be thrown
-        ((sun.awt.Win32GraphicsEnvironment) ge).displayChanged();
     }
 
     @Test
@@ -384,6 +379,27 @@ public class JavaTest {
         System.out.println(s == a2);
         System.out.println((b1+b2) == s);
         System.out.println(b1+b2);
+    }
+
+    @Test
+    public void testPools(){
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        Queue tasks = new ArrayDeque(10);
+    }
+
+    @Test
+    public void testDG(){
+        int num = getN(5);
+        System.out.println(num);
+    }
+
+
+    private int getN(int n){
+        if(n == 1){
+            return 1;
+        } else {
+            return n * getN(n-1);
+        }
     }
 
 
