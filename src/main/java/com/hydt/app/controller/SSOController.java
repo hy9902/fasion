@@ -13,4 +13,6 @@ public class SSOController {
     public Principal user(Principal principal) {
         return principal;
     }
+
+    @
 }

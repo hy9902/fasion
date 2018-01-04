@@ -51,7 +51,6 @@ public class ThreadTest {
         }
 
         System.out.println("线程名称"+Thread.currentThread().getName() + "   hello countdownlatch……");
-        System.in.read();
     }
 
     @Test
@@ -75,7 +74,6 @@ public class ThreadTest {
             System.out.println("hello countdownlatch……");
         }
 
-        System.in.read();
     }
 
     /**
@@ -102,7 +100,11 @@ public class ThreadTest {
             });
             System.out.println("hello Semaphore……");
         }
+    }
 
-        System.in.read();
+    @Test
+    public void test123(){
+        System.out.println("----------------------------");
+        System.out.println();
     }
 }
