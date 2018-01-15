@@ -19,17 +19,27 @@ public class HelloMessage {
         this.name = name;
     }
 
+    @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof HelloMessage)) return false;
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof HelloMessage)) {
+            return false;
+        }
         final HelloMessage other = (HelloMessage) o;
-        if (!other.canEqual((Object) this)) return false;
+        if (!other.canEqual((Object) this)) {
+            return false;
+        }
         final Object this$name = this.getName();
         final Object other$name = other.getName();
-        if (this$name == null ? other$name != null : !this$name.equals(other$name)) return false;
+        if (this$name == null ? other$name != null : !this$name.equals(other$name)) {
+            return false;
+        }
         return true;
     }
 
+    @Override
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
@@ -42,6 +52,7 @@ public class HelloMessage {
         return other instanceof HelloMessage;
     }
 
+    @Override
     public String toString() {
         return "HelloMessage(name=" + this.getName() + ")";
     }

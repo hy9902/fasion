@@ -53,9 +53,9 @@ public class FasionApplication implements CommandLineRunner{
 		SpringApplication.run(FasionApplication.class, args);
 	}
 
-
 	@Bean
 	CommandLineRunner init(StorageService storageService) {
+		logger.warn("fasionApplication StorageService init");
 		return (args) -> {
 			storageService.deleteAll();
 			storageService.init();
@@ -82,13 +82,17 @@ public class FasionApplication implements CommandLineRunner{
 			logger.error("tcScopeConfig is OK");
 			logger.error("isEnable :" + tcScopeConfig.isEnable());
 			Map<String, String> map = tcScopeConfig.getEir();
-			if(map == null) return;
+			if(map == null) {
+                return;
+            }
 			logger.error("getEir size :" + map.size());
 			for(Map.Entry<String,String> entry: map.entrySet()){
 				logger.error(entry.getKey() + ":" + entry.getValue());
 			}
 			List<String> pc = tcScopeConfig.getPc();
-			if(pc == null) return;
+			if(pc == null) {
+                return;
+            }
 			logger.error("getPc size :" + pc.size());
 			for(String item: pc){
 				logger.error(item);

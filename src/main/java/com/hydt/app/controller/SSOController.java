@@ -14,5 +14,4 @@ public class SSOController {
         return principal;
     }
 
-    @
 }
