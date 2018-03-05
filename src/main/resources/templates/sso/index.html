@@ -13,7 +13,7 @@
     <script type="text/javascript">
         $.get("/user", function(data) {
             $("#user").html(data.userAuthentication.details.name);
-            $(".unauthenticated").hide()
+            $(".unauthenticated").hide();
             $(".authenticated").show()
         });
 
@@ -22,7 +22,7 @@
                 $("#user").html('');
                 $(".unauthenticated").show();
                 $(".authenticated").hide();
-            })
+            });
             return true;
         }
     </script>

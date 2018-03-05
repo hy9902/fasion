@@ -55,8 +55,6 @@ public class FasionSessionFilter extends OncePerRequestFilter {
                 logger.error(String.format("原始请求Header key=%s, value=%s", key, value));
             }
 
-
-
             BodyReaderHttpServletRequestWrapper requestWrapper = new BodyReaderHttpServletRequestWrapper(request);
             enumeration = requestWrapper.getParameterNames();
             while (enumeration.hasMoreElements()){

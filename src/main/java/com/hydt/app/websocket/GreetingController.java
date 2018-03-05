@@ -28,7 +28,7 @@ public class GreetingController {
 
     @MessageMapping("/message")
     @SendToUser("/message")
-    public Greeting userMessage(Greeting userMessage) throws Exception {
+    public Greeting userMessage(Greeting userMessage) {
         return userMessage;
     }
 

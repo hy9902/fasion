@@ -24,7 +24,6 @@ import java.util.Map;
 /**
  * Created by bean_huang on 2017/7/5.
  */
-@CrossOrigin(origins="*", allowedHeaders = "*")
 @Controller
 public class IndexController {
     private static Logger logger = LoggerFactory.getLogger(IndexController.class);
@@ -80,7 +79,7 @@ public class IndexController {
         logger.error("querySql(text): " + text);
         jdbcTemplate.query(text, new RowCallbackHandler() {
             @Override
-            public void processRow(ResultSet rs) throws SQLException {
+            public void processRow(ResultSet rs) {
 
             }
         });

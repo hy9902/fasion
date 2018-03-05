@@ -28,15 +28,12 @@ public class HelloMessage {
             return false;
         }
         final HelloMessage other = (HelloMessage) o;
-        if (!other.canEqual((Object) this)) {
+        if (!other.canEqual(this)) {
             return false;
         }
         final Object this$name = this.getName();
         final Object other$name = other.getName();
-        if (this$name == null ? other$name != null : !this$name.equals(other$name)) {
-            return false;
-        }
-        return true;
+        return this$name == null ? other$name == null : this$name.equals(other$name);
     }
 
     @Override

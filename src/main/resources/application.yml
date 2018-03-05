@@ -1,6 +1,6 @@
 jetty:
   httpPort: 80
-  httpsPort: 443
+  httpsPort: 8080
   keyStore: classpath:keystore
   passWord: hydt2017
 
@@ -9,15 +9,26 @@ debug: true
 
 security:
   basic:
-    enabled: true
+    enabled: false
   user:
     name: hy9902
     password: vgundam0097
+  oauth2:
+      client:
+        clientId: 233668646673605
+        clientSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
+        accessTokenUri: https://graph.facebook.com/oauth/access_token
+        userAuthorizationUri: https://www.facebook.com/dialog/oauth
+        tokenName: oauth_token
+        authenticationScheme: query
+        clientAuthenticationScheme: form
+      resource:
+        userInfoUri: https://graph.facebook.com/me
 
 management:
   security:
     roles: SUPERUSER
-    enabled: true
+    enabled: false
 
 #spring
 spring:
@@ -79,30 +90,29 @@ spring:
     encoding: UTF-8
 
 #rabbitmq
-  rabbitmq:
-    host: 192.168.201.62
-    port: 5672
-    username: ds
-    password: ds
-    virtual-host: dsdemoHost
-    listener:
-      simple:
-        acknowledge-mode: auto
-        max-concurrency: 20
-    cache:
-      channel:
-        size: 20
-
-  redis:
-    host: localhost
-    port: 6379
-    password: ds2017@szedi.cn
+#  rabbitmq:
+#    host: 192.168.201.62
+#    port: 5672
+#    username: ds
+#    password: ds
+#    virtual-host: dsdemoHost
+#    listener:
+#      simple:
+#        acknowledge-mode: auto
+#        max-concurrency: 20
+#    cache:
+#      channel:
+#        size: 20
+#
+#  redis:
+#    host: localhost
+#    port: 6379
+#    password: ds2017@szedi.cn
 
 
 logging:
   level:
     com.hydt: debug
-    org.springframework.jdbc.core: debug
 
 dc:
   enable: true
@@ -115,12 +125,12 @@ dc:
     - thinkpad
     - sony
     - xiaomi
-server:
-  port: 443
-  ssl:
-    enabled: true
-    key-store: classpath:keystore
-    key-password: hydt2017
+#server:
+#  port: 443
+#  ssl:
+#    enabled: true
+#    key-store: classpath:keystore
+#    key-password: hydt2017
 
 
 #mybatis

@@ -20,8 +20,8 @@ import java.util.Date;
 public class Sender {
     private static Logger logger = LoggerFactory.getLogger(Sender.class);
     private static Long id = 1L;
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    //@Autowired
+    //private RabbitTemplate rabbitTemplate;
 
     //@Scheduled(fixedDelay = 5000L)
     public void send() {
@@ -31,7 +31,7 @@ public class Sender {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         MessageProperties properties = new MessageProperties();
         Message message = new Message(sdf.format(c.getTime()).getBytes(),properties);
-        this.rabbitTemplate.convertAndSend("hydt",sdf.format(c.getTime()));
+        //this.rabbitTemplate.convertAndSend("hydt",sdf.format(c.getTime()));
         //this.rabbitTemplate.convertAndSend("hydt", new Date());
     }
 
@@ -47,19 +47,18 @@ public class Sender {
         properties.setDelay(delay);
         //properties.setExpiration();
         Message message = new Message( String.format("%d--%s",delay,sdf.format(c.getTime())).getBytes(), properties );
-        this.rabbitTemplate.send("dlQue",message);
+        //this.rabbitTemplate.send("dlQue",message);
         //this.rabbitTemplate.convertAndSend("hydt", new Date());
     }
 
-    @Scheduled(fixedDelay = 5000L)
+    //@Scheduled(fixedDelay = 5000L)
     public void sendUser() {
-
         User user = new User();
         user.setName("ann");
         user.setAge((int)(Math.random()*100));
         user.setId(id++);
         logger.debug("amqp sendUser:"+ user.toString());
-        this.rabbitTemplate.convertAndSend("userQueue",user);
+        //this.rabbitTemplate.convertAndSend("userQueue",user);
         //this.rabbitTemplate.convertAndSend("hydt", new Date());
     }
 }

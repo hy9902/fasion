@@ -24,42 +24,6 @@ import javax.servlet.http.WebConnection;
 @Configuration
 public class SpringConfig {
 
-    @Bean
-    public EmbeddedServletContainerFactory embeddedServletContainerFactory(){
-        JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory = new JettyEmbeddedServletContainerFactory();
-        jettyEmbeddedServletContainerFactory.addServerCustomizers(new JettyServerCustomizer() {
-            @Override
-            public void customize(Server server) {
-                HttpConfiguration http = new HttpConfiguration();
-                http.setSecurePort(443);
-                http.setSecureScheme("https");
-                ServerConnector connector = new ServerConnector(server);
-                connector.setPort(80);
-                connector.addConnectionFactory(new HttpConnectionFactory(http));
-                server.addConnector(connector);
-            }
-        });
-        jettyEmbeddedServletContainerFactory.addConfigurations(new Http2HttpsConfig());
-        return jettyEmbeddedServletContainerFactory;
-    }
 
-    private class Http2HttpsConfig extends AbstractConfiguration{
-
-        @Override
-        public void configure(WebAppContext context) throws Exception {
-            super.configure(context);
-            Constraint constraint = new Constraint();
-            constraint.setDataConstraint(Constraint.DC_CONFIDENTIAL);
-
-            ConstraintMapping constraintMapping = new ConstraintMapping();
-            constraintMapping.setPathSpec("/*");
-            constraintMapping.setConstraint(constraint);
-
-            ConstraintSecurityHandler constraintSecurityHandler = new ConstraintSecurityHandler();
-            constraintSecurityHandler.addConstraintMapping(constraintMapping);
-
-            context.setSecurityHandler(constraintSecurityHandler);
-        }
-    }
 
 }

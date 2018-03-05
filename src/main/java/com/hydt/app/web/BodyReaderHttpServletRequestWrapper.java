@@ -17,7 +17,7 @@ public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapp
 
     private final byte[] body;
 
-    public BodyReaderHttpServletRequestWrapper(HttpServletRequest request) throws IOException {
+    public BodyReaderHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
         body = HttpHelper.getBodyString(request).getBytes(Charset.forName("UTF-8"));
     }
@@ -28,13 +28,13 @@ public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapp
     }
 
     @Override
-    public ServletInputStream getInputStream() throws IOException {
+    public ServletInputStream getInputStream() {
         final ByteArrayInputStream bais = new ByteArrayInputStream(body);
 
         return new ServletInputStream() {
 
             @Override
-            public int read() throws IOException {
+            public int read() {
                 return bais.read();
             }
 

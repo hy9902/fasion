@@ -78,10 +78,7 @@ public class MybatisPlusConfig {
             public boolean doFilter(MetaObject metaObject) {
                 MappedStatement ms = PluginUtils.getMappedStatement(metaObject);
                 // 过滤自定义查询此时无租户信息约束【 麻花藤 】出现
-                if ("com.hydt.app.mapper.UserMapper.selectListBySQL".equals(ms.getId())) {
-                    return true;
-                }
-                return false;
+                return "com.hydt.app.mapper.UserMapper.selectListBySQL".equals(ms.getId());
             }
         });
         return paginationInterceptor;

@@ -26,8 +26,8 @@ import java.util.Map;
 /**
  * Created by bean_huang on 2017/7/6.
  */
-@Configuration
-@EnableScheduling
+//@Configuration
+//@EnableScheduling
 public class AmqpConfig {
     private static Logger logger = LoggerFactory.getLogger(AmqpConfig.class);
 

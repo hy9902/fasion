@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by bean_huang on 2017/7/7.
  */
-@Component
+//@Component
 public class Reciever {
     private static Logger logger = LoggerFactory.getLogger(Reciever.class);
 

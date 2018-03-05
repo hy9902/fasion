@@ -30,7 +30,7 @@ public class ThreadTest {
      */
 
     @Test
-    public void testCountDownLatch() throws Exception {
+    public void testCountDownLatch() {
         final CountDownLatch cd = new CountDownLatch(5);
         for(int i =0;i<5;i++){
             System.out.println("i:"+i);
@@ -54,7 +54,7 @@ public class ThreadTest {
     }
 
     @Test
-    public void testCyclicBarrier() throws Exception{
+    public void testCyclicBarrier() {
         final CyclicBarrier  cb = new CyclicBarrier(5);
         for(int i =0;i<10;i++){
             System.out.println("i:"+i);
@@ -80,7 +80,7 @@ public class ThreadTest {
      * Semaphore其实和锁有点类似，它一般用于控制对某组资源的访问权限。
      */
     @Test
-    public void testSemaphore() throws Exception{
+    public void testSemaphore() {
         final Semaphore semaphore = new Semaphore(5);
         for(int i =0;i<10;i++){
             System.out.println("i:"+i);

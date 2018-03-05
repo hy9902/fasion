@@ -24,7 +24,7 @@ public class DataSourceAspect {
     private static Logger logger = LoggerFactory.getLogger(DataSourceAspect.class);
 
     //定义方法表达式切面
-    @Pointcut("execution(* com.hydt1.app.service.*.*(..))")
+    @Pointcut("execution(* com.hydt.app.service.*.*(..))")
     public void dataSourcePointcut() {
     }
 

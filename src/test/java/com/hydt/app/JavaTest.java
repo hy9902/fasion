@@ -152,14 +152,14 @@ public class JavaTest {
         AsyncSubject subject = AsyncSubject.create();
         subject.subscribe(new Consumer() {
             @Override
-            public void accept(Object o) throws Exception {
+            public void accept(Object o) {
                 System.out.println("ch1: " + o);
             }
         });
 
         subject.subscribe(new Consumer() {
             @Override
-            public void accept(Object o) throws Exception {
+            public void accept(Object o) {
                 System.out.println("ch2: " + o);
             }
         });
@@ -249,7 +249,7 @@ public class JavaTest {
     }
 
     @Test
-    public void testMD5() throws NoSuchAlgorithmException {
+    public void testMD5() {
         String source = "";
         Digest digest = new MD5Digest();
         digest.update(source.getBytes(), 0, source.length());
@@ -267,7 +267,7 @@ public class JavaTest {
     }
 
     @Test
-    public void testHex2() throws NoSuchAlgorithmException {
+    public void testHex2() {
         System.out.println(Integer.toBinaryString(-1&0xf) );
         System.out.println(Integer.toBinaryString(15&0xf) );
 

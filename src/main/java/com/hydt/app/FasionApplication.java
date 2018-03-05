@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -33,7 +34,7 @@ import java.util.Map;
 //@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 //@PropertySource(value={"file:D:/zTest/config/config1.properties"})
 @Import(DynamicDataSourceRegister.class)
-@EnableOAuth2Sso
+//@EnableOAuth2Sso
 public class FasionApplication implements CommandLineRunner{
 
 	private static Logger logger = LoggerFactory.getLogger(FasionApplication.class);
@@ -49,7 +50,6 @@ public class FasionApplication implements CommandLineRunner{
 
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(FasionApplication.class, args);
 	}
 
@@ -70,9 +70,9 @@ public class FasionApplication implements CommandLineRunner{
 	 * @throws Exception on error
 	 */
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		//testSampleService();
-		testTcScopeConfig();
+		//testTcScopeConfig();
 	}
 
 	private void testTcScopeConfig(){
@@ -112,9 +112,8 @@ public class FasionApplication implements CommandLineRunner{
 		try {
 			System.out.println(this.sampleService.secure());
 			System.out.println(this.sampleService.authorized());
-			//System.out.println(this.sampleService.denied());
-		}
-		finally {
+			System.out.println(this.sampleService.denied());
+		} finally {
 			SecurityContextHolder.clearContext();
 		}
 	}
